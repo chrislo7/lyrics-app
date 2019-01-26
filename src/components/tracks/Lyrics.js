@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from '../layout/Spinner';
 
@@ -8,6 +7,8 @@ class Lyrics extends Component {
     state = {
         track: {},
         lyrics: {},
+        album: {},
+        locale: { year: 'numeric', month: 'long', day: 'numeric' }
     };
 
     componentDidMount = () => {
@@ -20,13 +21,18 @@ class Lyrics extends Component {
             })
             .then(res => {
                 this.setState({ track: res.data.message.body.track });
+
+                return axios.get(`https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/album.get?album_id=${this.state.track.album_id}&apikey=${process.env.REACT_APP_MM_KEY}`)
             } )
+            .then(res => {
+                this.setState({ album: res.data.message.body.album })
+            })
             .catch(err => console.log(err));
     };
 
     render() {
-        const { track, lyrics } = this.state;
-        console.log( track );
+        const { track, lyrics, album, locale } = this.state;
+        console.log( album );
         if ( 
             track === undefined || 
             lyrics === undefined || 
@@ -36,13 +42,12 @@ class Lyrics extends Component {
         else { 
             return (
                 <React.Fragment>
-                    <Link to="/" className="btn btn-dark btn-sm mb-4">Back</Link>
                     <div className="card">
                         <h5 className="card-header">
-                            {track.track_name} by {' '}
+                            { track.track_name } <br/>
                             <span className="text-secondary">{ track.artist_name }</span>
                         </h5>
-                        <div className="card-text m-3" >
+                        <div className="card-text m-3 d-block" >
                             { lyrics.split('\n').map(function(item, key) {
                                 return (
                                     <span key={key}> {item}<br/> </span>
@@ -57,7 +62,7 @@ class Lyrics extends Component {
                                 <strong>Genre</strong>: { track.primary_genres.music_genre_list[0].music_genre.music_genre_name }
                             </li>
                             <li className="list-group-item">
-                                <strong>Release</strong>: { new Date(track.updated_time).toLocaleDateString('en-EN') }
+                                <strong>Release</strong>: { new Date(album.album_release_date).toLocaleDateString('en-EN', locale) }
                             </li>
                         </ul>
                     </div>
