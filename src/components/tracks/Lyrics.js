@@ -36,6 +36,7 @@ class Lyrics extends Component {
         if ( 
             track === undefined || 
             lyrics === undefined || 
+            album === undefined ||
             Object.keys(track).length === 0 || 
             Object.keys(lyrics).length === 0
         ) { return <Spinner /> }
