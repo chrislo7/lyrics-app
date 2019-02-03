@@ -16,3 +16,11 @@ Clicking into each song, users can view the lyrics of the given song, including 
 
 ## Technologies Used:
 | React | React Router | React Context | Bootstrap | MusixMatch API |
+
+## Screenshots:
+
+![Home Page](https://github.com/chrislo7/LyricLynx/blob/master/public/Homepage.png?raw=true)
+
+![Search Results](https://github.com/chrislo7/LyricLynx/blob/master/public/Search%20Results.png?raw=true)
+
+![Lyric Page](https://github.com/chrislo7/LyricLynx/blob/master/public/Lyrics.png?raw=true)
