@@ -1,4 +1,4 @@
-# LyricLynx
+# Lyrics App
 A front-end React web app utilizing the MusixMatch API
 
 ## Detailed Description
